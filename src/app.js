@@ -11,5 +11,9 @@ app.use(express.json());
 // rotas
 app.use("/api/clients", clientRoutes);
 
+import webhookRoutes from "./webhook.js";
+app.use("/webhook", webhookRoutes);
+
+
 export default app;
 
