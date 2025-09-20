@@ -1,57 +1,5 @@
-// import bcrypt from "bcryptjs";
-// import Client from "../models/Client.js";
-
-// // registrar usuário (cadastro)
-// export const registerUser = async (req, res) => {
-//   try {
-//     const { nome, email, senha } = req.body;
-
-//     const existing = await Client.findOne({ email });
-//     if (existing) return res.status(400).json({ msg: "Usuário já existe" });
-
-//     const hashedPassword = await bcrypt.hash(senha, 10);
-
-//     const client = new Client({ nome, email, senha: hashedPassword });
-//     await client.save();
-
-//     res.status(201).json({ msg: "Usuário registrado com sucesso", client });
-//   } catch (err) {
-//     res.status(500).json({ msg: "Erro ao registrar usuário", error: err.message });
-//   }
-// };
-
-// // listar todos
-// export const getClients = async (req, res) => {
-//   const clients = await Client.find();
-//   res.json(clients);
-// };
-
-// // buscar um cliente
-// export const getClient = async (req, res) => {
-//   const client = await Client.findById(req.params.id);
-//   if (!client) return res.status(404).json({ msg: "Cliente não encontrado" });
-//   res.json(client);
-// };
-
-// // atualizar cliente
-// export const updateClient = async (req, res) => {
-//   const { nome, email } = req.body;
-//   const client = await Client.findByIdAndUpdate(
-//     req.params.id,
-//     { nome, email },
-//     { new: true }
-//   );
-//   res.json(client);
-// };
-
-// // excluir cliente
-// export const deleteClient = async (req, res) => {
-//   await Client.findByIdAndDelete(req.params.id);
-//   res.json({ msg: "Cliente removido com sucesso" });
-// };
-
-
-import Client from "../models/Client.js"; // seu model do Mongoose
+import bcrypt from "bcryptjs";
+import Client from "../models/clientModel.js";
 
 // Criar novo cliente (Register)
 const registerUser = async (req, res) => {
@@ -63,7 +11,9 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: "E-mail já cadastrado" });
     }
 
-    const client = new Client({ name, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const client = new Client({ name, email, password: hashedPassword });
     await client.save();
 
     res.status(201).json({ message: "Cliente registrado com sucesso", client });
@@ -75,7 +25,7 @@ const registerUser = async (req, res) => {
 // Buscar todos os clientes
 const getClients = async (req, res) => {
   try {
-    const clients = await Client.find();
+    const clients = await Client.find().select("-password"); // não expor senha
     res.status(200).json(clients);
   } catch (error) {
     res.status(500).json({ message: "Erro ao buscar clientes", error });
@@ -85,7 +35,7 @@ const getClients = async (req, res) => {
 // Buscar cliente por ID
 const getClient = async (req, res) => {
   try {
-    const client = await Client.findById(req.params.id);
+    const client = await Client.findById(req.params.id).select("-password");
     if (!client) {
       return res.status(404).json({ message: "Cliente não encontrado" });
     }
@@ -99,12 +49,13 @@ const getClient = async (req, res) => {
 const updateClient = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const client = await Client.findByIdAndUpdate(
-      req.params.id,
-      { name, email, password },
-      { new: true }
-    );
+    const updateData = { name, email };
 
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
+    const client = await Client.findByIdAndUpdate(req.params.id, updateData, { new: true });
     if (!client) {
       return res.status(404).json({ message: "Cliente não encontrado" });
     }
