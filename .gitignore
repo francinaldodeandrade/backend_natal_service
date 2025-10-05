@@ -2,5 +2,9 @@ node_modules/
 
 .env
 
+<<<<<<< HEAD
 dockerfile
 
+=======
+dockerfile
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97

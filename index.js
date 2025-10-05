@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import app from "./src/app.js"
 
 // const hostName = process.env.HOSTNAME
@@ -27,3 +28,19 @@ app.use("/api/clients", clientRoutes);
 
 const PORT = process.env.PORT || 3031;
 app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
+=======
+import dotenv from "dotenv";
+import connectDB from "./src/config/database.js";
+import app from "./src/app.js";
+
+dotenv.config();
+
+// conectar banco
+connectDB();
+
+const PORT = process.env.PORT || 3030;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+});
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97

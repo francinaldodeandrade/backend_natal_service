@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import dotenv from "dotenv-safe"
 // dotenv.config()
 
@@ -32,9 +33,28 @@ import clientRoutes from "./src/routes/clientRoutes.js";
 
 const app = express();
 
+=======
+import express from "express";
+import cors from "cors";
+import clientRoutes from "./routes/clientRoutes.js";
+
+const app = express();
+
+// middlewares
+app.use(cors());
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97
 app.use(express.json());
 
 // rotas
 app.use("/api/clients", clientRoutes);
 
+<<<<<<< HEAD
 export default app;
+=======
+import webhookRoutes from "./webhook.js";
+app.use("/webhook", webhookRoutes);
+
+
+export default app;
+
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97

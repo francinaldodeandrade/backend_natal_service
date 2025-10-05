@@ -1,14 +1,23 @@
 {
+<<<<<<< HEAD
   "name": "api_natal_service",
   "version": "1.0.0",
   "description": "API para cadastro e consultas",
   "main": "index.js",
   "type": "module",
+=======
+  "name": "api_natalservice",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "api de usuários natal service",
+  "main": "index.js",
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm install && node index.js",
     "dev": "nodemon index.js"
   },
+<<<<<<< HEAD
   "keywords": [],
   "author": "Naldo.dev",
   "license": "ISC",
@@ -27,6 +36,20 @@
     "openai": "^4.14.1",
     "twilio": "^4.19.0",
     "uuid": "^13.0.0"
+=======
+  "author": "naldo.Dev",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "dotenv-safe": "^9.1.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.1"
+>>>>>>> 2eda5205d21347beec58aa80450f99ac3f1bce97
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
